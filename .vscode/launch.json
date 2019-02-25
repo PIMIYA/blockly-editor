@@ -6,12 +6,9 @@
     "configurations": [{
         "type": "node",
         "request": "launch",
-        "name": "Launch Electron",
-        "runtimeExecutable": "npm",
-        "runtimeArgs": [
-            "start"
-        ],
-        "cwd": "${workspaceFolder}/src",
-        "port": 9229
+        "name": "Electron Main",
+        "runtimeExecutable": "${workspaceFolder}/src/node_modules/.bin/electron",
+        "runtimeArgs": ["${workspaceFolder}/src"],
+        "program": "${workspaceFolder}/src/main.js"
     }]
 }
