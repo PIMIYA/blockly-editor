@@ -12,7 +12,8 @@ if (process.mas) app.setName('Blockly Editor');
 let mainWindow = null;
 
 function makeSingleInstance() {
-    if (process.mas) return
+    if (process.mas) return;
+
     app.requestSingleInstanceLock();
     app.on('second-instance', () => {
         if (mainWindow) {
@@ -21,7 +22,7 @@ function makeSingleInstance() {
             }
             mainWindow.focus();
         }
-    })
+    });
 }
 
 function initialize() {
@@ -42,14 +43,14 @@ function initialize() {
         mainWindow.loadFile('index.html');
 
         // Open the DevTools.
-        // win.webContents.openDevTools()
+        mainWindow.webContents.openDevTools();
 
         // Emitted when the window is closed.
         mainWindow.on('closed', () => {
             // Dereference the window object, usually you would store windows
             // in an array if your app supports multi windows, this is the time
             // when you should delete the corresponding element.
-            mainWindow = null
+            mainWindow = null;
         });
     }
 
