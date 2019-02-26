@@ -11,11 +11,6 @@ Code.LANGUAGE_NAME = {
 };
 
 /**
- * List of RTL languages.
- */
-Code.LANGUAGE_RTL = ['ar', 'fa', 'he', 'lki'];
-
-/**
  * Blockly's main workspace.
  * @type {Blockly.WorkspaceSvg}
  */
@@ -38,6 +33,7 @@ Code.getStringParamFromUrl = function (name, defaultValue) {
  * @return {string} User's language.
  */
 Code.getLang = function () {
+    return 'zh-hant';
     var lang = Code.getStringParamFromUrl('lang', '');
     if (Code.LANGUAGE_NAME[lang] === undefined) {
         lang = 'zh-hant';
@@ -46,19 +42,11 @@ Code.getLang = function () {
 };
 
 /**
- * Is the current language (Code.LANG) an RTL language?
- * @return {boolean} True if RTL, false if LTR.
- */
-Code.isRtl = function () {
-    return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
-};
-
-/**
  * Initialize the page language.
  */
 Code.initLanguage = function () {
     // Set the HTML's language and direction.
-    var rtl = Code.isRtl();
+    var rtl = false;
     document.dir = rtl ? 'rtl' : 'ltr';
     document.head.parentElement.setAttribute('lang', Code.LANG);
 
@@ -98,12 +86,10 @@ Code.onUpdated = function (event) {
     var code = Code.getGeneratedScript();
     codeHolder.appendChild(code);
     codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
-    prettyPrint();
 };
 
 Code.saveToFile = function () {
     console.log('saveToFile');
-    
 };
 
 /**
@@ -118,7 +104,7 @@ Code.init = function () {
 
     Code.initLanguage();
 
-    var rtl = Code.isRtl();
+    var rtl = false;
 
     var toolboxText = document.getElementById('toolbox').outerHTML;
     toolboxText = toolboxText.replace(/{(\w+)}/g,
@@ -141,16 +127,16 @@ Code.init = function () {
             controls: true,
             wheel: true
         },
-        media: 'blockly/media/'
+        media: '../../assets/blockly/media/'
     });
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
         workspace);
-    workspace.addChangeListener(Code.onUpdated);
+    // workspace.addChangeListener(Code.onUpdated);
 
     Code.workspace = workspace;
 };
 
 // Load the Code demo's language strings.
-document.write('<script src="msg/' + Code.LANG + '.js"></script>\n');
+document.write('<script src="../../assets/js/msg/' + Code.LANG + '.js"></script>\n');
 // Load Blockly's language strings.
-document.write('<script src="blockly/msg/js/' + Code.LANG + '.js"></script>\n');
+document.write('<script src="../../assets/blockly/msg/js/' + Code.LANG + '.js"></script>\n');
