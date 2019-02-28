@@ -17,7 +17,10 @@
     <script src="../../assets/js/generator.js"></script>
 </head>
 
-<body>
+<body allow="autoplay">
+    <button type="button" id="btnBackHome">回首頁</button>
+    <button type="button" id="btnSimulate">模擬</button>
+
     <div class="app-container">
         <div id="blocklyDiv" class="main blockly-panel"></div>
 
@@ -33,7 +36,7 @@
             <hr class="pops">
             <pre></pre>
         </div> -->
-        <div id="saveButton" class="save-button material-icons">file_download</div>
+        <div id="btnSaveFile" class="save-button material-icons">save file</div>
     </div>
 
     <xml id="toolbox" style="display: none">
@@ -356,13 +359,16 @@
 
     <xml id="startBlocks" style="display:none">
         <block type="procedures_defnoreturn" x="13" y="38">
-            <field name="run">run</field>
+            <field name="NAME">run</field>
             <comment pinned="false" h="80" w="160"></comment>
         </block>
     </xml>
 
     <script src="../../assets/js/coder.js"></script>
     <script src="../../assets/js/main.js"></script>
+    <script>
+        require('../../renderer-process/blockly');
+    </script>
 </body>
 
 </html>

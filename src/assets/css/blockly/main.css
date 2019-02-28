@@ -82,6 +82,7 @@
     font-weight: 500;
     background-color: #0097A7;
     cursor: pointer;
+    white-space: unset;
 }
 
 .save-button:hover {

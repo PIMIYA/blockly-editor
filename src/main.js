@@ -1,3 +1,5 @@
+const path = require('path');
+const glob = require('glob');
 const {
     app,
     BrowserWindow
@@ -28,11 +30,13 @@ function makeSingleInstance() {
 function initialize() {
     makeSingleInstance();
 
+    loadMainProcess();
+
     function createWindow() {
         const windowOptions = {
-            width: 1080,
-            minWidth: 680,
-            height: 840,
+            width: 1280,
+            minWidth: 1280,
+            height: 960,
             title: app.getName()
         };
 
@@ -43,7 +47,7 @@ function initialize() {
         mainWindow.loadFile('./views/index.html');
 
         // Open the DevTools.
-        mainWindow.webContents.openDevTools();
+        // mainWindow.webContents.openDevTools();
 
         // Emitted when the window is closed.
         mainWindow.on('closed', () => {
@@ -83,7 +87,11 @@ function initialize() {
     });
 }
 
-initialize();
+function loadMainProcess() {
+    const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
+    files.forEach((file) => {
+        require(file);
+    })
+}
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+initialize();

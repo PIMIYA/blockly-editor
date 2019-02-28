@@ -1,13 +1,40 @@
-<template>
-    <section id="simulation-section" class="section">
-        <header class="section-header">
-            <div class="section-wrapper">
-                <button type="button" data-section="main">back</button>
-                SIMULATION
-            </div>
-        </header>
+<!DOCTYPE html>
+<html lang="en">
 
-        <main class="simulation-section">
-        </main>
-    </section>
-</template>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simulator</title>
+
+    <link rel="stylesheet" href="../../assets/css/simulation/main.css">
+</head>
+
+<body>
+    <div>
+        <button type="button" id="btnBackHome">回首頁</button>
+        <button type="button" id="btnBlockly">Blockly</button>
+    </div>
+    <br><br>
+    <div>
+        <button type="button" id="btnMode">切換模式</button>
+        <button type="button" id="btnStart">開始</button>
+        <button type="button" id="btnStop">停止</button>
+        <button type="button" id="btnReset">重置</button>
+
+        <button type="button" id="btnReload">Reload</button>
+
+        <span id="status">status</span>
+    </div>
+
+    <div id="ledContent" class="container">
+        <div class="container-led">
+        </div>
+    </div>
+
+    <script>
+        require('../../renderer-process/simulation.js');
+    </script>
+</body>
+
+</html>

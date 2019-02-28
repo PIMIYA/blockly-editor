@@ -66,30 +66,26 @@ Code.initLanguage = function () {
 
 Code.getGeneratedScript = function () {
     let code = Blockly.JavaScript.workspaceToCode(Code.workspace);
-    let fullCode = `const constValue = require('../common/constValue');
-const ledManager = require('../common/ledManager');
-const config = require('../config');
-const runtimeValue = require('../runtimeValue');
-
-${code}
+    let fullCode = `${code}
 module.exports = {
     run: run
 };
 `;
-    return document.createTextNode(fullCode);
+    fullCode = fullCode.replace(
+        'function run() {',
+        'function run(constValue ,runtimeValue, ledManager) {');
+
+    return fullCode;
 }
 
 Code.onUpdated = function (event) {
-    var codeDiv = document.getElementById('codeDiv');
-    var codeHolder = document.createElement('pre');
+    let codeDiv = document.getElementById('codeDiv');
+    let codeHolder = document.createElement('pre');
     codeHolder.className = 'prettyprint but-not-that-pretty';
-    var code = Code.getGeneratedScript();
-    codeHolder.appendChild(code);
+    let code = Code.getGeneratedScript();
+    let textNode = document.createTextNode(code);
+    codeHolder.appendChild(textNode);
     codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
-};
-
-Code.saveToFile = function () {
-    console.log('saveToFile');
 };
 
 /**
@@ -99,7 +95,6 @@ Code.saveToFile = function () {
 Code.LANG = Code.getLang();
 
 Code.init = function () {
-    document.getElementById('saveButton').addEventListener('click', Code.saveToFile);
     // document.getElementById('saveBlockButton').addEventListener('click', Code.saveBlocksToXml);
 
     Code.initLanguage();
@@ -140,3 +135,5 @@ Code.init = function () {
 document.write('<script src="../../assets/js/msg/' + Code.LANG + '.js"></script>\n');
 // Load Blockly's language strings.
 document.write('<script src="../../assets/blockly/msg/js/' + Code.LANG + '.js"></script>\n');
+
+module.exports = Code;
