@@ -73,7 +73,7 @@ module.exports = {
 `;
     fullCode = fullCode.replace(
         'function run() {',
-        'function run(constValue ,runtimeValue, ledManager) {');
+        'function run(constValue, runtimeValue, ledManager) {');
 
     return fullCode;
 }
@@ -86,6 +86,21 @@ Code.onUpdated = function (event) {
     let textNode = document.createTextNode(code);
     codeHolder.appendChild(textNode);
     codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
+};
+
+Code.generateXml = function () {
+    let dom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    return Blockly.Xml.domToText(dom);
+};
+
+Code.restoreByXml = function (xmlText) {
+    try {
+        Blockly.mainWorkspace.clear();
+        let dom = Blockly.Xml.textToDom(xmlText);
+        return Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 /**

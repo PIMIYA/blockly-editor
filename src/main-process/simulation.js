@@ -2,6 +2,7 @@ const {
     ipcMain
 } = require('electron');
 
+const storageManager = require('../common-process/storageManager');
 const constValue = require('../common-process/constValue');
 const ledManager = require('../common-process/ledManager');
 ledManager.init();
@@ -22,12 +23,9 @@ ipcMain.on('simulator-controller', (event, cmd) => {
             runner.resetAll();
             event.sender.send('simulator-controller', cmd);
             break;
-
-        case 'reload':
-            runner.importScript();
-            break;
-
-        default:
+        case 'loadScript':
+            runner.importScript(storageManager.getBlocklyScript());
+            event.sender.send('simulator-controller', cmd, storageManager.getBlocklyScript());
             break;
     }
 });

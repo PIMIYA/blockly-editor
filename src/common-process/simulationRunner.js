@@ -34,7 +34,7 @@ class Runner {
         runtimeValue.addElapsed(elapsed);
 
         if (this.logicer) {
-            this.logicer.run(constValue ,runtimeValue, ledManager);
+            this.logicer.run(constValue, runtimeValue, ledManager);
         }
     }
 
@@ -57,22 +57,25 @@ class Runner {
     }
 
     importScript(content) {
-        // TODO remove assign text
-        content = `var idx;
-        function run(constValue ,runtimeValue, ledManager) {
-            idx = idx == undefined ?
-             0 :
-             idx;
-          idx = idx % 8;
-          ledManager.renderImage('D:/workspace/blockly-editor/res/full-'+idx+'.jpg');
-          idx++;
+        if (!content) {
+            return;
         }
 
-        module.exports = {
-            run: run
-        };
-        `;
+        // content = `var idx;
+        // function run(constValue ,runtimeValue, ledManager) {
+        //     idx = idx == undefined ?
+        //      0 :
+        //      idx;
+        //   idx = idx % 8;
+        //   ledManager.renderImage('D:/workspace/blockly-editor/res/full-'+idx+'.jpg');
+        //   idx++;
+        // }
 
+        // module.exports = {
+        //     run: run
+        // };
+        // `;
+        console.log('load');
         this.logicer = requireFromString(content);
     }
 }

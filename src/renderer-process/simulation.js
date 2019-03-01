@@ -22,7 +22,6 @@ let btnMode = document.getElementById('btnMode');
 let btnStart = document.getElementById('btnStart');
 let btnStop = document.getElementById('btnStop');
 let btnReset = document.getElementById('btnReset');
-let btnReload = document.getElementById('btnReload');
 
 let spanStatus = document.getElementById('status');
 
@@ -103,7 +102,7 @@ function updateButtonColor(ledData) {
     }
 }
 
-ipcRenderer.on('simulator-controller', (event, cmd) => {
+ipcRenderer.on('simulator-controller', (event, cmd, args) => {
     switch (cmd) {
         case 'stop':
             _state = 0;
@@ -124,6 +123,10 @@ ipcRenderer.on('simulator-controller', (event, cmd) => {
         case 'reset':
             ipcRenderer.send('simulate-led', 'getLedStatus');
             break;
+
+        case 'loadScript':
+            console.log(args);
+            break;
     }
 
     updateStatueInformation(_mode, _state);
@@ -140,9 +143,6 @@ ipcRenderer.on('simulate-led', (event, cmd, response) => {
 
 ipcRenderer.on('simulate-ready', (event, arg) => {
     // console.log(arg);
-    ipcRenderer.send('simulate-led', 'getLedStatus');
-    ipcRenderer.send('simulator-controller', 'stop');
-
     _w = arg.TotalLedWidth;
     _h = arg.TotalLedHeight;
     let ledDiv = document.getElementById('ledContent');
@@ -161,6 +161,10 @@ ipcRenderer.on('simulate-ready', (event, arg) => {
             container.appendChild(btn);
         }
     }
+
+    ipcRenderer.send('simulator-controller', 'stop');
+    ipcRenderer.send('simulator-controller', 'loadScript');
+    ipcRenderer.send('simulate-led', 'getLedStatus');
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -186,10 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnReset.addEventListener('click', (event) => {
         ipcRenderer.send('simulator-controller', 'reset');
-    });
-
-    btnReload.addEventListener('click', (event) => {
-        ipcRenderer.send('simulator-controller', 'reload');
     });
 
     ipcRenderer.send('simulate-ready');
