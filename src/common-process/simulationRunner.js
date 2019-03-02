@@ -39,7 +39,7 @@ class Runner {
     }
 
     start() {
-        console.log('Start loop');
+        // console.log('Start loop');
         _paused = false;
 
         if (!_intervalId) {
@@ -48,7 +48,7 @@ class Runner {
     }
 
     stop() {
-        console.log('Stop loop');
+        // console.log('Stop loop');
         _paused = true;
     }
 
@@ -61,21 +61,6 @@ class Runner {
             return;
         }
 
-        // content = `var idx;
-        // function run(constValue ,runtimeValue, ledManager) {
-        //     idx = idx == undefined ?
-        //      0 :
-        //      idx;
-        //   idx = idx % 8;
-        //   ledManager.renderImage('D:/workspace/blockly-editor/res/full-'+idx+'.jpg');
-        //   idx++;
-        // }
-
-        // module.exports = {
-        //     run: run
-        // };
-        // `;
-        console.log('load');
         this.logicer = requireFromString(content);
     }
 }
