@@ -4,6 +4,10 @@
 
 進入到 `src` 資料夾底下後執行 `npm start`
 
+## How To Build
+
+`npm run package`
+
 ## ISSUE
 
 ### NODE_MODULE_VERSION 不一致的問題
@@ -24,4 +28,4 @@
 - [x] 回復 blockly 之前狀態(import xml from memory cache?)
 - [ ] 建置檔案
   - [ ] macOs
-  - [ ] Windows
+  - [x] Windows
