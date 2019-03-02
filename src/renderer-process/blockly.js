@@ -26,15 +26,28 @@ window.onbeforeunload = function (e) {
     storageManager.saveBlockly(Code);
 };
 
-ipcRenderer.on('saved-file', (event, response) => {
+ipcRenderer.on('saved-script', (event, response) => {
     if (response.err) console.error(response.err);
+});
+
+ipcRenderer.on('export-xml', (event, response) => {
+    if (response.err) console.error(response.err);
+});
+
+ipcRenderer.on('import-xml', (event, response) => {
+    if (response.err) {
+        console.error(response.err);
+        return;
+    }
+
+    Code.restoreByXml(response.data);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     let btnSaveFile = document.getElementById('btnSaveFile');
     btnSaveFile.addEventListener('click', (event) => {
         let script = Code.getGeneratedScript();
-        ipcRenderer.send('save-dialog', script);
+        ipcRenderer.send('script-save-dialog', script);
     });
 
     let btnBackHome = document.getElementById('btnBackHome');
@@ -45,6 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let btnSimulate = document.getElementById('btnSimulate');
     btnSimulate.addEventListener('click', (event) => {
         window.location.assign('../simulation/index.html');
+    });
+
+    let btnExportXml = document.getElementById('btnExportXml');
+    btnExportXml.addEventListener('click', (event) => {
+        let xml = Code.generateXml();
+        ipcRenderer.send('xml-export-dialog', xml);
+    });
+    let btnImportXml = document.getElementById('btnImportXml');
+    btnImportXml.addEventListener('click', (event) => {
+        ipcRenderer.send('xml-import-dialog');
     });
 
     storageManager.restoreBlockly(Code);

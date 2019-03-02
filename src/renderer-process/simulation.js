@@ -89,14 +89,20 @@ function onLedButtonClick(e) {
     ipcRenderer.send('simulate-led', cmd, request);
 }
 
-function updateButtonColor(ledData) {
-    // console.log(ledData);
+function updateButton(data) {
+    // console.log(data);
     for (let rIdx = 1; rIdx <= _h; rIdx++) {
         for (let cIdx = 1; cIdx <= _w; cIdx++) {
             let id = `led_${rIdx}_${cIdx}`;
             let btn = _ledButtons[id];
             if (btn) {
-                btn.style.backgroundColor = ledData[rIdx - 1][cIdx - 1];
+                if (data.led != null) {
+                    btn.style.backgroundColor = data.led[rIdx - 1][cIdx - 1];
+                }
+
+                if (data.button != null) {
+                    btn.innerHTML = data.button[rIdx - 1][cIdx - 1];
+                }
             }
         }
     }
@@ -116,16 +122,16 @@ ipcRenderer.on('simulator-controller', (event, cmd, args) => {
             _state = 1;
 
             _intervalId = setInterval(() => {
-                ipcRenderer.send('simulate-led', 'getLedStatus');
+                ipcRenderer.send('simulate-led', 'getStatus');
             }, INTERVAL);
             break;
 
         case 'reset':
-            ipcRenderer.send('simulate-led', 'getLedStatus');
+            ipcRenderer.send('simulate-led', 'getStatus');
             break;
 
         case 'loadScript':
-            console.log(args);
+            // console.log(args);
             break;
     }
 
@@ -135,8 +141,8 @@ ipcRenderer.on('simulator-controller', (event, cmd, args) => {
 ipcRenderer.on('simulate-led', (event, cmd, response) => {
     // console.log(cmd, response);
     switch (cmd) {
-        case 'getLedStatus':
-            updateButtonColor(response);
+        case 'getStatus':
+            updateButton(response);
             break;
     }
 });
@@ -164,7 +170,7 @@ ipcRenderer.on('simulate-ready', (event, arg) => {
 
     ipcRenderer.send('simulator-controller', 'stop');
     ipcRenderer.send('simulator-controller', 'loadScript');
-    ipcRenderer.send('simulate-led', 'getLedStatus');
+    ipcRenderer.send('simulate-led', 'getStatus');
 });
 
 document.addEventListener('DOMContentLoaded', () => {
