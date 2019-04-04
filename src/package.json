@@ -1,6 +1,6 @@
 {
     "name": "blockly-editor",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "",
     "main": "main.js",
     "scripts": {
@@ -20,16 +20,16 @@
     },
     "homepage": "https://github.com/PIMIYA/blockly-editor#readme",
     "devDependencies": {
-        "electron": "^4.0.5",
-        "electron-packager": "^13.1.0",
+        "electron": "^4.1.3",
+        "electron-packager": "^13.1.1",
         "electron-rebuild": "^1.8.4"
     },
     "dependencies": {
         "electron-prompt": "^1.3.0",
         "electron-settings": "^3.2.0",
-        "electron-store": "^2.0.0",
+        "electron-store": "^3.1.0",
         "glob": "^7.1.3",
-        "jimp": "^0.6.0",
+        "jimp": "^0.6.1",
         "require-from-string": "^2.0.2",
         "underscore": "^1.9.1"
     }

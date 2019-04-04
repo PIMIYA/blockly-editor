@@ -6,7 +6,7 @@
 
 ## How To Build
 
-`npm run package`
+`npm run package-win`
 
 ## ISSUE
 
