@@ -6,7 +6,8 @@
     "scripts": {
         "start": "electron .",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "package": "electron-packager ./ blockly-editor --platform=win32,mas --arch=x64 --out ../output"
+        "package-win": "electron-packager ./ blockly-editor --overwrite --platform=win32 --arch=x64 --out ../output",
+        "package-mac": "electron-packager ./ blockly-editor --overwrite --platform=mac --arch=x64 --out ../output"
     },
     "repository": {
         "type": "git",
