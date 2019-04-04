@@ -1,19 +1,17 @@
 const Color = require('./color');
 
-const NODE_ROW = 1;
-const NODE_COLUMN = 1;
-// const NODE_ROW = 3;
-// const NODE_COLUMN = 13;
+// const NODE_ROW = 1;
+// const NODE_COLUMN = 1;
+const NODE_ROW = 3;
+const NODE_COLUMN = 13;
 // 每個 node 上的 board row
 const BOARD_ROW = 1;
 // 每個 node 上的 board column
 const BOARD_COLUMN = 1;
 // 每個 board led 寬
-const BOARD_LED_WIDTH = 8;
-// const BOARD_LED_WIDTH = 6;
+const BOARD_LED_WIDTH = 6;
 // 每個 board led 高
-const BOARD_LED_HEIGHT = 8;
-// const BOARD_LED_HEIGHT = 6;
+const BOARD_LED_HEIGHT = 6;
 
 module.exports = {
     /** @type {Color} */
@@ -62,9 +60,10 @@ module.exports = {
      * @param {number} column Node count of column.
      */
     setNodeCount: function (row, column) {
-        this.NodeColumn = column;
-        this.NodeRow = row;
-        this.NodeCount = row * column;
+        if (column) this.NodeColumn = column;
+        if (row) this.NodeRow = row;
+
+        this.NodeCount = this.NodeColumn * this.NodeRow;
         this.refreshTotalCount();
     },
 
@@ -76,10 +75,10 @@ module.exports = {
     setBoardCount: function (row, column) {
         this.BoardColumn = column;
         this.BoardRow = row;
-        this.BoardCount = row * column;
+        this.BoardCount = this.BoardColumn * this.BoardRow;
 
-        this.NodeLedWidth = this.BoardLedWidth * column;
-        this.NodeLedHeight = this.BoardLedHeight * row;
+        this.NodeLedWidth = this.BoardLedWidth * this.BoardColumn;
+        this.NodeLedHeight = this.BoardLedHeight * this.BoardRow;
 
         this.refreshTotalCount();
     },

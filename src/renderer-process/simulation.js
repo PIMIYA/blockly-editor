@@ -4,21 +4,21 @@ const {
 
 const utils = require('../common-process/utils');
 
-const INTERVAL = 500;
+const INTERVAL = 300;
 const RGB_REGEX = /rgb\((\d+), (\d+), (\d+)\)/;
 
 let _intervalId = null;
 let _w = 0;
 let _h = 0;
 /** @type {number} Mode 0: free, 1: art, 2: blockly */
-let _mode = 0;
+let _mode = 2;
 /** @type {number} State 0: stop, 1: start */
 let _state = -1;
 
 let btnBackHome = document.getElementById('btnBackHome');
 let btnBlockly = document.getElementById('btnBlockly');
 
-let btnMode = document.getElementById('btnMode');
+// let btnMode = document.getElementById('btnMode');
 let btnStart = document.getElementById('btnStart');
 let btnStop = document.getElementById('btnStop');
 let btnReset = document.getElementById('btnReset');
@@ -35,6 +35,9 @@ function switchMode() {
     } else {
         _mode = 0;
     }
+
+    // force to blockly
+    _mode = 2;
 
     updateStatueInformation(_mode, _state);
 }
@@ -182,9 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.assign('../blockly/index.html')
     });
 
-    btnMode.addEventListener('click', (event) => {
-        switchMode();
-    });
+    // btnMode.addEventListener('click', (event) => {
+    //     switchMode();
+    // });
 
     btnStart.addEventListener('click', (event) => {
         ipcRenderer.send('simulator-controller', 'start');

@@ -1,3 +1,17 @@
+/** Led 管理器
+ * 以二維陣列 rawLedStatus[constValue.TotalLedHeight][constValue.TotalLedWidth] 存取 Led 的燈號狀態
+ *
+ * nodeIndex 表示各個 Node 的編號 0 代表最左邊的 Node，一個 Node 存在著 constValue.BoardCount 個 Led board
+ * Server side nodeIndex 不要設定，要為 null，不然在設定 Led 狀態的時候會只存取部分 Led 資料
+ * Node side 要在一開始就設定 nodeIndex，這樣在拿到 server 傳送過來的資料後設定(setRawLedStatus)會自動擷取相對應 nodeIndex 的 Led 資料
+ */
+
+/**
+ * TODO: runtimeLedStatus: 尚未實作，打算把空白塞進 rawLedStatus 中，讓跑馬燈狀態下看起來有間隔
+ * TODO: 馬跑燈, 實做跑馬燈中間的空白
+ * TODO: Cached the leds from jimp images
+ */
+
 const _ = require('underscore');
 const Jimp = require('jimp');
 
@@ -121,7 +135,7 @@ async function ledToJimp(image, callback) {
     });
 }
 
-class ledManager {
+class LedManager {
     constructor() {
         /** @type {number} Current mode [Free, Art, Blockly] */
         this.mode = modeEnum.FREE;
@@ -189,7 +203,7 @@ class ledManager {
             return this.rawLedStatus.slice();
         }
 
-        let nodeRowIdx = Math.floor(nodeIndex / constValue.NodeRow);
+        let nodeRowIdx = Math.floor(nodeIndex / constValue.NodeColumn);
         let nodeRowStart = nodeRowIdx * constValue.NodeLedHeight;
 
         let nodeColIdx = nodeIndex % constValue.NodeColumn;
@@ -244,7 +258,7 @@ class ledManager {
         } else {
             let dest = [];
 
-            let rowIdx = Math.floor(this.nodeIndex / constValue.NodeRow);
+            let rowIdx = Math.floor(this.nodeIndex / constValue.NodeColumn);
             let rowStart = rowIdx * constValue.NodeLedHeight;
             let rowEnd = rowStart + constValue.NodeLedHeight;
             let colIdx = this.nodeIndex % constValue.NodeColumn;
@@ -385,7 +399,7 @@ class ledManager {
      * Get all buttons.
      * @return {Array<Array<number>>}
      */
-    getAllButtonStatus(buttons) {
+    getAllButtonStatus() {
         return this.buttonStatus.slice();
     }
 
@@ -421,11 +435,17 @@ class ledManager {
     }
 
     async renderImage(fileName) {
-        let ledData = await jimpToLed(fileName);
+        let filePath = [this.resourcePath, fileName].join('/');
+        let ledData = await jimpToLed(filePath);
         if (ledData != null) {
             this.setRawLedStatus(ledData);
         }
     }
 }
 
-module.exports = new ledManager();
+/** @type {LedManager} */
+let _ledManager;
+
+if (!_ledManager) _ledManager = new LedManager();
+
+module.exports = _ledManager;

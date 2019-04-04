@@ -53,7 +53,7 @@ class Utils {
         pos.BoardRow = x;
         pos.BoardColumn = y;
 
-        let nodeX = Math.floor(nodeIndex / constValue.NodeRow);
+        let nodeX = Math.floor(nodeIndex / constValue.NodeColumn);
         let nodeY = nodeIndex % constValue.NodeColumn;
 
         let orgX = nodeX * constValue.BoardLedHeight;
@@ -197,6 +197,23 @@ class Utils {
             led.push('#' + `${clr}`.padStart(6, '0'));
         }
         return _.chunk(led, constValue.TotalLedWidth);
+    }
+
+    reverseOdd(rawLed) {
+        if (!_.isArray(rawLed)) {
+            return rawLed;
+        }
+
+        return _.map(rawLed, function ( /** @type {Array} */ element, /** @type {number} */ index) {
+            // console.log(index, element);
+            if (index % 2 == 0) {
+                // even
+                return element;
+            } else {
+                // odd
+                return element.reverse();
+            }
+        })
     }
 }
 

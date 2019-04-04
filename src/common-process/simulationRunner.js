@@ -4,10 +4,11 @@ const constValue = require('./constValue');
 const runtimeValue = require('./runtimeValue');
 const ledManager = require('./ledManager');
 
-const INTERVAL = 50;
+const INTERVAL = 300;
 let _intervalId = null;
 let _locked = false;
 let _paused = false;
+let _content = null;
 
 class Runner {
     constructor() {
@@ -53,14 +54,16 @@ class Runner {
     }
 
     resetAll() {
-        ledManager.resetAll();
+        this.importScript(_content);
     }
 
     importScript(content) {
+        ledManager.resetAll();
         if (!content) {
             return;
         }
 
+        _content = content;
         this.logicer = requireFromString(content);
     }
 }
