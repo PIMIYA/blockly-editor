@@ -244,7 +244,7 @@ Blockly.Blocks['render_image_set'] = {
                 ["JPG", ".jpg"],
                 ["PNG", ".png"]
             ]), "imageOptions")
-            .appendField("編號 = ");
+            .appendField("代數 = ");
         this.appendValueInput("imgIndex")
             .setCheck("Number");
         this.appendDummyInput()
