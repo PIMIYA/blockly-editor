@@ -40,7 +40,10 @@ function initialize() {
             width: 1280,
             minWidth: 1280,
             height: 960,
-            title: app.getName()
+            title: app.getName(),
+            webPreferences: {
+                nodeIntegration: true
+            }
         };
 
         // Create the browser window.
