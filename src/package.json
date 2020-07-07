@@ -20,7 +20,7 @@
     },
     "homepage": "https://github.com/PIMIYA/blockly-editor#readme",
     "devDependencies": {
-        "electron": "^5.0.6",
+        "electron": "^7.2.4",
         "electron-packager": "^14.0.0",
         "electron-rebuild": "^1.8.5",
         "fstream": ">=1.0.12"
