@@ -32,6 +32,6 @@
         "glob": "^7.1.4",
         "jimp": "^0.6.4",
         "require-from-string": "^2.0.2",
-        "underscore": "^1.9.1"
+        "underscore": "^1.12.1"
     }
 }
